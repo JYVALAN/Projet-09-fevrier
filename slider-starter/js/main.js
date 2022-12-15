@@ -26,96 +26,14 @@
  * On utilise en général comme fonction gestionnaire d'événement associée une fonction anonyme car
  * on ne l'appellera jamais ailleurs nous-même.
 */
-// let sliders = [
-//     {
-//         title:'Graffiti par Joenomias',
-//         image:'img/1.jpg',
-//     },
-//     {
-//         title:'Rue urbaine par Wimkantona',
-//         image:'img/2.jpg',
-//     },
-//     {
-//         title:'Velo Vintage par _cristina',
-//         image:'img/3.jpg',
-//     },
-//     {
-//         title:"Escalier par Pasja1000",
-//         image: 'img/4.jpg',
-//     },
-//     {
-//         title:"Penang Asia par Onyva",
-//         image: 'img/5.jpg',
-//     },
-//     {
-//         title:"Artiste de rue par Wobbut",
-//         image: 'img/6.jpg',
-//     },
-// ];
 
-// let slider = document.querySelector('.slider-layout');
-
-// class Slider{
-//     constructor(title,image){
-//         this.title = title
-//         this.image = image
-//     }
-    
-//     display(){
-        
-//             return `<figure class="slider-figure">
-//             <img class="slider-picture" src="${this.image}" alt="">
-//             <figcaption class="slider-legend">${this.title}</figcaption>
-//           </figure>`;
-        
-//     }
-// }
-
-// let objSliders = []
-// for(let i=0;i<sliders.length;i++){
-//     let slide = new Slider(sliders[i].title,sliders[i].image);
-
-//     objSliders.push(slide)
-//     console.log(slide)
-
-//     let html = slide.display();
-//     slider.innerHTML += html;
-    
-// }
-// let btnprev = document.querySelector('#prev')
-// let btnnext = document.querySelector('#next')
-// let pictures = document.querySelectorAll('.slider-figure')
-// let active = 0;
-
-// btnnext.addEventListener('onclick', function(){
-//     // number = number + sens
-//     for(i = 0; i<active, i++){
-//        let pictures[i].classList.add("active");
-//     }
-//             // if (active < 0){
-//             //     active = picture.length - 1;
-//             // }    
-    
-//     // document.getElementById("next").src = pictures[i];
-        
-// })
-
-// btnprev.addEventListener('onclick', function(sens){
-//     number = number + sens
-//     for(let picture of pictures){
-//             if (number > 0){
-//                 number = picture.length - 1;
-//             }     
-//     }
-//     document.getElementById("prev").src = pictures[i];
-        
-// })
     
 let items = document.querySelectorAll('.slider-figure');
 let nbSlide = items.length;
 let btnprev = document.querySelector('#prev');
 let btnnext = document.querySelector('#next');
-let playpause = document.querySelector('#play-pause')
+let btnplaypause = document.querySelector('#play-pause');
+let btnrandom = document.querySelector('#random');
 let count = 0;
 
 function slidenext(){
@@ -148,9 +66,32 @@ function slideprev(){
 }
 btnprev.addEventListener('click', slideprev)
 
-setInterval("slidenext()", 4000);
+let chrono
+let play
+function playpause(){
+    if (!play){
+        chrono = setInterval(slidenext, 2000);
+        play = true
+    }
+    else{
+        clearInterval(chrono)
+        play = false
+    }
+}
 
-function playpause()
+
+let hasard
+function aleatoire(){
+    
+    if(!hasard){
+        chrono = Math.floor(Math.random(setInterval(, 2000)));
+        hasard = true
+    }
+    else{
+        clearInterval(chrono)
+        hasard = false
+    }
+}
 
 function keypress(e){
     if(e.keyCode == '37'){
@@ -159,8 +100,11 @@ function keypress(e){
     else if(e.keyCode == '39'){
         slidenext()
     }
-    else if (e.keyCode == '32'){
-
+    else if(e.keyCode == '32' ){
+        playpause()
     }
 }
+
 document.addEventListener('keydown', keypress)
+btnplaypause.addEventListener('click', playpause)
+btnrandom.addEventListener('click', aleatoire)
