@@ -80,17 +80,11 @@ function playpause(){
 }
 
 
-let hasard
 function aleatoire(){
-    
-    if(!hasard){
-        chrono = Math.floor(Math.random(setInterval(, 2000)));
-        hasard = true
-    }
-    else{
-        clearInterval(chrono)
-        hasard = false
-    }
+    items[count].classList.remove('active');
+    let hasard = Math.floor( Math.random()*items.length) //on stocke un nombre aléatoire entre 0 et la taille du tableau dans la variable hasard
+     count = hasard
+    items[count].classList.add('active');
 }
 
 function keypress(e){
