@@ -36,24 +36,28 @@ let btnplaypause = document.querySelector('#play-pause');
 let btnrandom = document.querySelector('#random');
 let count = 0;
 
-function slidenext(){
-    items[count].classList.remove('active');
+function active(){
+    items[count].classList.toggle('active');
+}
 
+function slidenext(){
+    active(items[count])
+    
     if(count < nbSlide - 1){
         count++;
     }
     else{
         count = 0;
     }
-
-    items[count].classList.add('active');
+    active(items[count])
+    
     console.log(count)
 }
-btnnext.addEventListener('click', slidenext)
+
 
 
 function slideprev(){
-    items[count].classList.remove('active');
+    active(items[count])
 
     if(count > 0){
         count--;
@@ -62,12 +66,12 @@ function slideprev(){
         count = nbSlide - 1;
     }
 
-    items[count].classList.add('active');
+    active(items[count])
 }
-btnprev.addEventListener('click', slideprev)
+
 
 let chrono
-let play
+let play = false
 function playpause(){
     if (!play){
         chrono = setInterval(slidenext, 2000);
@@ -81,24 +85,84 @@ function playpause(){
 
 
 function aleatoire(){
-    items[count].classList.remove('active');
+    active(items[count])
     let hasard = Math.floor( Math.random()*items.length) //on stocke un nombre aléatoire entre 0 et la taille du tableau dans la variable hasard
-     count = hasard
-    items[count].classList.add('active');
+    count = hasard
+    active(items[count])
 }
 
-function keypress(e){
-    if(e.keyCode == '37'){
-        slideprev()
-    }
-    else if(e.keyCode == '39'){
-        slidenext()
-    }
-    else if(e.keyCode == '32' ){
-        playpause()
-    }
+    document.addEventListener("keydown", function(event) {
+        
+        switch(event.code) {
+            case "Space": 
+            playpause()
+            break
+            case "ArrowLeft":
+                slideprev()
+                break
+            case "ArrowRight":
+                slidenext()
+                break
 }
+})
 
-document.addEventListener('keydown', keypress)
+// for(let i = 0; i < items.length; i++){
+//     let puce = document.createElement('li')
+//     puce.classList.add('.slider-dots')
+//     puce.setAttribute('data-index', i)
+//     puce.addEventListener('click', function(){
+//         active(i)
+//     })
+//     listpuces.appendChild(puce)
+// }
+// navBar.appendChild(listpuces)
+
+// function puces(i){
+//     document.querySelectorAll('.slider-dots li').forEach(function (puce){
+//         if(puce.getAttribute('data-index') = i){
+//             puce.classList.add('selected');
+//         }
+//         else{
+//             puce.classList.remove('selected')
+//         }
+//     })
+// }
+
 btnplaypause.addEventListener('click', playpause)
 btnrandom.addEventListener('click', aleatoire)
+btnnext.addEventListener('click', slidenext)
+btnprev.addEventListener('click', slideprev)
+
+let layout = document.querySelector('.slider-layout')
+let listpuces = document.createElement('ul')
+layout.appendChild(listpuces)
+listpuces.classList.add("slider-dots")
+
+
+for (let i = 0; i < items.length; ++i) {
+    // const slider = items[i];
+    let dot = document.createElement('li')
+    
+    listpuces.appendChild(dot);
+    dot.addEventListener("click", dotClick);
+        
+    if(i==0){
+        dot.classList.add("active-dot");
+    }
+        
+}
+
+function changedots(index){
+    dot.forEach(function(dots){
+        if(dots.getAttribute('data-index') = index){
+            dots.classList.add("active-dot")
+        }
+        else{
+            dots.classList.remove('active-dots')
+        }
+    })
+}
+
+function dotClick(event) {
+    console.log('coucou')
+}
