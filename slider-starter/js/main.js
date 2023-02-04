@@ -36,10 +36,12 @@ let btnplaypause = document.querySelector('#play-pause');
 let btnrandom = document.querySelector('#random');
 let count = 0;
 
+//Permet de mettre la classe active sur la photo à afficher
 function active(){
     items[count].classList.toggle('active');
 }
 
+//Permet de passer à la photo suivante
 function slidenext(){
     active(items[count])
     
@@ -55,7 +57,7 @@ function slidenext(){
 }
 
 
-
+//Permet de passer à la photo précédente
 function slideprev(){
     active(items[count])
 
@@ -69,7 +71,7 @@ function slideprev(){
     active(items[count])
 }
 
-
+//Active le boutton play pause pour un défilement automatique
 let chrono
 let play = false
 function playpause(){
@@ -83,7 +85,7 @@ function playpause(){
     }
 }
 
-
+//Permet d'activer le bouton pour un défilement aléatoire
 function aleatoire(){
     active(items[count])
     let hasard = Math.floor( Math.random()*items.length) //on stocke un nombre aléatoire entre 0 et la taille du tableau dans la variable hasard
@@ -91,48 +93,28 @@ function aleatoire(){
     active(items[count])
 }
 
-    document.addEventListener("keydown", function(event) {
+//Active les fonctionnalités des boutons avec les touches du clavier
+document.addEventListener("keydown", function(event) {
         
-        switch(event.code) {
-            case "Space": 
-            playpause()
+    switch(event.code) {
+        case "Space": 
+        playpause()
+        break
+        case "ArrowLeft":
+            slideprev()
             break
-            case "ArrowLeft":
-                slideprev()
-                break
-            case "ArrowRight":
-                slidenext()
-                break
-}
+        case "ArrowRight":
+            slidenext()
+            break
+    }
 })
-
-// for(let i = 0; i < items.length; i++){
-//     let puce = document.createElement('li')
-//     puce.classList.add('.slider-dots')
-//     puce.setAttribute('data-index', i)
-//     puce.addEventListener('click', function(){
-//         active(i)
-//     })
-//     listpuces.appendChild(puce)
-// }
-// navBar.appendChild(listpuces)
-
-// function puces(i){
-//     document.querySelectorAll('.slider-dots li').forEach(function (puce){
-//         if(puce.getAttribute('data-index') = i){
-//             puce.classList.add('selected');
-//         }
-//         else{
-//             puce.classList.remove('selected')
-//         }
-//     })
-// }
 
 btnplaypause.addEventListener('click', playpause)
 btnrandom.addEventListener('click', aleatoire)
 btnnext.addEventListener('click', slidenext)
 btnprev.addEventListener('click', slideprev)
 
+//Je n'ai pas réussi à faire les puces du slider
 let layout = document.querySelector('.slider-layout')
 let listpuces = document.createElement('ul')
 layout.appendChild(listpuces)
@@ -165,4 +147,5 @@ function changedots(index){
 
 function dotClick(event) {
     console.log('coucou')
+    
 }

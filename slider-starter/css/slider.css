@@ -109,3 +109,6 @@
 .slider-dots li:hover{
   background-color: #dd5735;
 }
+.active-dot{
+  background-color: #dd5735;
+}
